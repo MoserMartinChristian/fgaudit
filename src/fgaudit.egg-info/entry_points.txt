@@ -1,0 +1,5 @@
+[console_scripts]
+fgaudit = fgaudit.cli:main
+
+[gui_scripts]
+fgaudit-gui = fgaudit.gui:main

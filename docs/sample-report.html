@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:">
+<meta name="referrer" content="no-referrer">
+<title>fgaudit report</title><style>
+:root{--bg:#f6f7f9;--card:#fff;--fg:#1c2330;--muted:#5d6878;--line:#dde2e8;--accent:#2457c5;
+--high:#c62828;--high-bg:#fdecec;--medium:#a85d00;--medium-bg:#fff4e0;--low:#1f6f8b;--low-bg:#e6f4f8;--info:#5d6878;--info-bg:#eef0f3;--ok:#1b7a3d;--ok-bg:#e7f6ec;
+color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not(:has(#theme:checked)){--bg:#0f141b;--card:#171e28;--fg:#e4e9f0;--muted:#97a3b4;--line:#2a3442;--accent:#7aa2ff;
+--high:#ff6b6b;--high-bg:#3a1c1f;--medium:#f4b24a;--medium-bg:#3a2c14;--low:#5cc4e0;--low-bg:#132e38;--info:#97a3b4;--info-bg:#222a35;--ok:#5fd28a;--ok-bg:#15301f;color-scheme:dark}}
+@media (prefers-color-scheme:light){:root:has(#theme:checked){--bg:#0f141b;--card:#171e28;--fg:#e4e9f0;--muted:#97a3b4;--line:#2a3442;--accent:#7aa2ff;
+--high:#ff6b6b;--high-bg:#3a1c1f;--medium:#f4b24a;--medium-bg:#3a2c14;--low:#5cc4e0;--low-bg:#132e38;--info:#97a3b4;--info-bg:#222a35;--ok:#5fd28a;--ok-bg:#15301f;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 16px 60px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:18px;margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:15px;margin:0 0 4px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chip{border-radius:999px;padding:3px 12px;font-weight:600;font-size:13px}
+.sev-high{color:var(--high);background:var(--high-bg)}.sev-medium{color:var(--medium);background:var(--medium-bg)}
+.sev-low{color:var(--low);background:var(--low-bg)}.sev-info{color:var(--info);background:var(--info-bg)}
+.ok{color:var(--ok);background:var(--ok-bg)}
+.finding{border-left:4px solid var(--line)}
+.finding.high{border-left-color:var(--high)}.finding.medium{border-left-color:var(--medium)}.finding.low{border-left-color:var(--low)}.finding.info{border-left-color:var(--info)}
+.finding .meta{font-size:12px;color:var(--muted);margin:2px 0 8px}
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;border-radius:4px;padding:1px 7px;margin-right:6px;vertical-align:2px}
+.next{margin-top:8px;padding:8px 10px;border-radius:6px;background:var(--bg)}
+.next b{color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.tl-high td:first-child{box-shadow:inset 3px 0 var(--high)}.tl-medium td:first-child{box-shadow:inset 3px 0 var(--medium)}
+.tbl{overflow-x:auto}
+.toggle{cursor:pointer;user-select:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;background:var(--card);color:var(--fg)}
+#theme{position:absolute;opacity:0;pointer-events:none}
+footer{margin-top:40px;font-size:12px;color:var(--muted)}
+ul.notes{margin:6px 0;padding-left:20px}
+</style></head><body>
+<input type="checkbox" id="theme" aria-label="theme">
+<div class="wrap"><header><div>
+<h1>fgaudit report: Demo with built-in made-up data</h1>
+<div class="muted small">Offline and read-only. Nothing was sent anywhere and nothing was changed.</div>
+</div><label class="toggle" for="theme">Toggle dark/light</label></header>
+<div class="card"><h3>Summary</h3><div class="chips"><span class="chip sev-high">HIGH 14</span><span class="chip sev-medium">MEDIUM 7</span><span class="chip sev-low">LOW 4</span><span class="chip sev-info">INFO 9</span></div><div class="chip " style="display:inline-block;font-weight:500">25 finding(s): 14 high, 7 medium, 4 low. + 9 INFO.</div></div>
+<h2>Configuration audit (FortiOS 7.4)</h2>
+<div class="muted small">Input: fw-demo-01_7-4.conf  |  FortiOS 7.4.8 (FGVM64)  |  VDOMs: root  |  34 policies</div>
+<div class="card"><h3>Notes</h3><ul class="notes">
+<li>Unreferenced objects: references are searched in the whole VDOM. Objects used only by FortiManager, scripts or other devices can still appear.</li>
+</ul></div>
+<h2>Findings (19)</h2>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Interfaces port2 and port6 have overlapping subnets</h3>
+<div class="meta">VDOM root | overlap</div><div>interface port2 (10.10.0.0/24, VDOM root) and interface port6 (10.10.0.128/25, VDOM root) overlap in 10.10.0.128/25. Connected routes for the same addresses on two interfaces make forwarding and replies unpredictable. The VDOM has allow-subnet-overlap enabled.</div>
+<div class="next"><b>Next step:</b> Give one of the interfaces a non-overlapping subnet, or document why the overlap is intended.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>DHCP range 1 (port2) overlaps the subnet of port6</h3>
+<div class="meta">VDOM root | overlap</div><div>DHCP range 1 (port2) (10.10.0.100-10.10.0.199, VDOM root) and interface port6 (10.10.0.128/25, VDOM root) overlap in 10.10.0.128-10.10.0.199. Leased addresses would also belong to another connected network.</div>
+<div class="next"><b>Next step:</b> Correct the DHCP range or the interface subnet.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>IPsec remote network partner-p2 overlaps local interface vlan100</h3>
+<div class="meta">VDOM root | overlap</div><div>phase 2 remote selector partner-p2 (10.30.0.0/24, VDOM root) and interface vlan100 (10.30.0.0/24, VDOM root) overlap in 10.30.0.0/24. Traffic to these addresses stays local (connected route) instead of entering the tunnel. A remote selector that is a larger summary of a local network is not reported.</div>
+<div class="next"><b>Next step:</b> Renumber one side or use NAT over the tunnel.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Policy 20 &quot;block-guest-smtp&quot; can never match: 40 &quot;lan-any-out&quot; above it catches the same traffic with a different action</h3>
+<div class="meta">VDOM root | shadow</div><div>Policy 40 &quot;lan-any-out&quot; (action accept) fully covers policy 20 &quot;block-guest-smtp&quot; (action deny) in every match criterion: interfaces, source, destination, service, schedule, users. Traffic meant for 20 &quot;block-guest-smtp&quot; gets action accept instead. Note: policy 40 has the higher ID but sits higher in the list (position 15 before 16). Order counts, not the ID.</div>
+<div class="next"><b>Next step:</b> Decide which action is intended. If the later policy should apply, move it above the earlier one. Check the hit count and last-used time of both policies on the FortiGate (Policy &amp; Objects &gt; Firewall Policy) before you change or delete anything.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Policy 48 &quot;voice-dns&quot; can never match: 47 &quot;vlan-only-internal&quot; above it catches the same traffic with a different action</h3>
+<div class="meta">VDOM root | shadow</div><div>Policy 47 &quot;vlan-only-internal&quot; (action deny) fully covers policy 48 &quot;voice-dns&quot; (action accept) in every match criterion: interfaces, source, destination, service, schedule, users. Traffic meant for 48 &quot;voice-dns&quot; gets action deny instead.</div>
+<div class="next"><b>Next step:</b> Decide which action is intended. If the later policy should apply, move it above the earlier one. Check the hit count and last-used time of both policies on the FortiGate (Policy &amp; Objects &gt; Firewall Policy) before you change or delete anything.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Policy 51 &quot;lowlan-ssh-dmz&quot; can never match: 49 &quot;lan-ssh-dmz&quot; above it catches the same traffic with a different action</h3>
+<div class="meta">VDOM root | shadow</div><div>Policy 49 &quot;lan-ssh-dmz&quot; (action deny) fully covers policy 51 &quot;lowlan-ssh-dmz&quot; (action accept) in every match criterion: interfaces, source, destination, service, schedule, users. Traffic meant for 51 &quot;lowlan-ssh-dmz&quot; gets action deny instead.</div>
+<div class="next"><b>Next step:</b> Decide which action is intended. If the later policy should apply, move it above the earlier one. Check the hit count and last-used time of both policies on the FortiGate (Policy &amp; Objects &gt; Firewall Policy) before you change or delete anything.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Policy 53 &quot;dmz-8080&quot; can never match: 52 &quot;dmz-tcp-all&quot; above it catches the same traffic with a different action</h3>
+<div class="meta">VDOM root | shadow</div><div>Policy 52 &quot;dmz-tcp-all&quot; (action deny) fully covers policy 53 &quot;dmz-8080&quot; (action accept) in every match criterion: interfaces, source, destination, service, schedule, users. Traffic meant for 53 &quot;dmz-8080&quot; gets action deny instead.</div>
+<div class="next"><b>Next step:</b> Decide which action is intended. If the later policy should apply, move it above the earlier one. Check the hit count and last-used time of both policies on the FortiGate (Policy &amp; Objects &gt; Firewall Policy) before you change or delete anything.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Policy 58 &quot;v6-printers-block&quot; can never match: 9 &quot;v6-lan-out&quot; above it catches the same traffic with a different action</h3>
+<div class="meta">VDOM root | shadow</div><div>Policy 9 &quot;v6-lan-out&quot; (action accept) fully covers policy 58 &quot;v6-printers-block&quot; (action deny) in every match criterion: interfaces, source, destination, service, schedule, users. Traffic meant for 58 &quot;v6-printers-block&quot; gets action accept instead.</div>
+<div class="next"><b>Next step:</b> Decide which action is intended. If the later policy should apply, move it above the earlier one. Check the hit count and last-used time of both policies on the FortiGate (Policy &amp; Objects &gt; Firewall Policy) before you change or delete anything.</div>
+</div>
+<div class="card finding medium"><h3><span class="badge sev-medium">MEDIUM</span>DHCP range 2 (port3) lies partly outside its interface subnet</h3>
+<div class="meta">VDOM root | overlap</div><div>DHCP range 2 (port3) (10.20.0.200-10.20.1.20, VDOM root) and interface port3 (10.20.0.0/24, VDOM root) overlap in 10.20.1.0-10.20.1.20. Clients would get addresses that the interface cannot reach directly. The range shown is the part outside.</div>
+<div class="next"><b>Next step:</b> Align the DHCP range with the interface subnet.</div>
+</div>
+<div class="card finding medium"><h3><span class="badge sev-medium">MEDIUM</span>IP pools wan-pool and wan-pool-2 overlap</h3>
+<div class="meta">VDOM root | overlap</div><div>IP pool wan-pool (203.0.113.3-203.0.113.4, VDOM root) and IP pool wan-pool-2 (203.0.113.4/31, VDOM root) overlap in 203.0.113.4. Two NAT pools hand out the same addresses, which can cause session clashes.</div>
+<div class="next"><b>Next step:</b> Make the pools disjoint, or use one pool.</div>
+</div>
+<div class="card finding medium"><h3><span class="badge sev-medium">MEDIUM</span>VIPs web-vip and old-web-vip claim the same external address</h3>
+<div class="meta">VDOM root | overlap</div><div>VIP external IP web-vip (203.0.113.2, VDOM root) and VIP external IP old-web-vip (203.0.113.2, VDOM root) overlap in 203.0.113.2. Both VIPs match the same external IP and ports on the same interface, so only one can take effect.</div>
+<div class="next"><b>Next step:</b> Use different external IPs or non-overlapping ports.</div>
+</div>
+<div class="card finding medium"><h3><span class="badge sev-medium">MEDIUM</span>Policy 41 &quot;staff-https&quot; is redundant: 4 &quot;lan-web-out&quot; above it covers it with the same action</h3>
+<div class="meta">VDOM root | shadow</div><div>Policy 4 &quot;lan-web-out&quot; covers policy 41 &quot;staff-https&quot; in every match criterion and has the same action (accept). 41 &quot;staff-https&quot; never receives traffic. Security profiles differ (later -&gt; earlier policy): av-profile: strict-av -&gt; -; ssl-ssh-profile: - -&gt; certificate-inspection; webfilter-profile: - -&gt; default.</div>
+<div class="next"><b>Next step:</b> Check whether the later policy can be removed. If the security profiles differ, the earlier policy&#x27;s profiles are the ones applied. Check the hit count and last-used time of both policies on the FortiGate (Policy &amp; Objects &gt; Firewall Policy) before you change or delete anything.</div>
+</div>
+<div class="card finding low"><h3><span class="badge sev-low">LOW</span>Policy 42 &quot;lan-dns-ntp-copy&quot; duplicates 6 &quot;lan-dns-ntp&quot;</h3>
+<div class="meta">VDOM root | shadow</div><div>Both policies have identical match criteria and the same action (accept). Only 6 &quot;lan-dns-ntp&quot; ever matches.</div>
+<div class="next"><b>Next step:</b> Remove the duplicate only after comparing hit counts and security profiles. Check the hit count and last-used time of both policies on the FortiGate (Policy &amp; Objects &gt; Firewall Policy) before you change or delete anything.</div>
+</div>
+<div class="card finding low"><h3><span class="badge sev-low">LOW</span>1 unreferenced address objects</h3>
+<div class="meta">VDOM root | unused</div><div>These objects are not used anywhere in the VDOM: old-server.</div>
+<div class="next"><b>Next step:</b> Check whether they are still needed (for example by FortiManager or scripts) before deleting them. Factory default objects are excluded.</div>
+</div>
+<div class="card finding low"><h3><span class="badge sev-low">LOW</span>1 unreferenced custom services</h3>
+<div class="meta">VDOM root | unused</div><div>These objects are not used anywhere in the VDOM: legacy-app.</div>
+<div class="next"><b>Next step:</b> Check whether they are still needed (for example by FortiManager or scripts) before deleting them. Factory default objects are excluded.</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Not reliably checkable: policy 11 &quot;inbound-web&quot; may be shadowed by 46 &quot;inbound-any-deny&quot;</h3>
+<div class="meta">VDOM root | shadow</div><div>46 &quot;inbound-any-deny&quot; covers 11 &quot;inbound-web&quot; in every criterion that can be checked statically. For destination this cannot be proven because dynamic or unresolvable objects are involved (web-vip). fgaudit therefore does not report shadowing.</div>
+<div class="next"><b>Next step:</b> Check what these objects currently resolve to on the FortiGate, and compare the hit counts of both policies.</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Not reliably checkable: policy 12 &quot;inbound-mail&quot; may be shadowed by 46 &quot;inbound-any-deny&quot;</h3>
+<div class="meta">VDOM root | shadow</div><div>46 &quot;inbound-any-deny&quot; covers 12 &quot;inbound-mail&quot; in every criterion that can be checked statically. For destination this cannot be proven because dynamic or unresolvable objects are involved (mail-vip). fgaudit therefore does not report shadowing.</div>
+<div class="next"><b>Next step:</b> Check what these objects currently resolve to on the FortiGate, and compare the hit counts of both policies.</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Not reliably checkable: policy 43 &quot;dmz-partner&quot; may be shadowed by 7 &quot;updates&quot;</h3>
+<div class="meta">VDOM root | shadow</div><div>7 &quot;updates&quot; covers 43 &quot;dmz-partner&quot; in every criterion that can be checked statically. For destination this cannot be proven because dynamic or unresolvable objects are involved (partner-fqdn). fgaudit therefore does not report shadowing.</div>
+<div class="next"><b>Next step:</b> Check what these objects currently resolve to on the FortiGate, and compare the hit counts of both policies.</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Not reliably checkable: policy 45 &quot;dmz-any-out&quot; may be shadowed by 7 &quot;updates&quot;</h3>
+<div class="meta">VDOM root | shadow</div><div>7 &quot;updates&quot; covers 45 &quot;dmz-any-out&quot; in every criterion that can be checked statically. For destination this cannot be proven because dynamic or unresolvable objects are involved (update-fqdn). fgaudit therefore does not report shadowing.</div>
+<div class="next"><b>Next step:</b> Check what these objects currently resolve to on the FortiGate, and compare the hit counts of both policies.</div>
+</div>
+<h2>Change review (FortiOS 7.6)</h2>
+<div class="muted small">Input: fw-demo-01_before.conf  |  FortiOS 7.6.4 (FGVM64)  |  VDOMs: root  |  12 policies</div>
+<div class="muted small">Input: fw-demo-01_after.conf  |  FortiOS 7.6.4 (FGVM64)  |  VDOMs: root  |  13 policies</div>
+<div class="card"><h3>Notes</h3><ul class="notes">
+<li>12 policy UUID difference(s) ignored as noise.</li>
+</ul></div>
+<h2>Findings (12)</h2>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Policy order changed: 4 &quot;lan-web-out&quot; now evaluated in a different order against policies with another action</h3>
+<div class="meta">VDOM root | change</div><div>Policy 4 &quot;lan-web-out&quot; moved from position 4 to 3. It can match the same traffic as 3 &quot;printers-no-internet&quot;, which have a different action. The first match wins, so the behaviour changes.</div>
+<div class="next"><b>Next step:</b> Confirm the new order is intended and test the affected traffic.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Management access removed on interface port2</h3>
+<div class="meta">VDOM root | change</div><div>Removing https, ssh from allowaccess can lock you out if you manage the FortiGate through this interface. Changes: allowaccess: ping https ssh -&gt; ping.</div>
+<div class="next"><b>Next step:</b> Make sure you have another management path (console, other interface) before applying.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Broad accept rule: policy 70 &quot;temp-any&quot;</h3>
+<div class="meta">VDOM root | change</div><div>The policy accepts traffic with &#x27;any&#x27; in source, destination, service.</div>
+<div class="next"><b>Next step:</b> Narrow source, destination or service, and confirm the rule was intended.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Default route 1 changed</h3>
+<div class="meta">VDOM root | change</div><div>The default route carries all traffic without a more specific route, including your remote management session. Changes: gateway: 203.0.113.1 -&gt; 203.0.113.6.</div>
+<div class="next"><b>Next step:</b> Apply with console access and check the new gateway and distance.</div>
+</div>
+<div class="card finding medium"><h3><span class="badge sev-medium">MEDIUM</span>Unencrypted management protocol enabled on port1</h3>
+<div class="meta">VDOM root | change</div><div>http sends credentials in clear text. Changes: allowaccess: ping -&gt; ping http.</div>
+<div class="next"><b>Next step:</b> Use HTTPS/SSH only, or restrict trusted hosts.</div>
+</div>
+<div class="card finding medium"><h3><span class="badge sev-medium">MEDIUM</span>Object web-srv changed</h3>
+<div class="meta">VDOM root | change</div><div>Objects change the behaviour of every policy that uses them. Changes: subnet: 10.20.0.10 255.255.255.255 -&gt; 10.20.0.12 255.255.255.255. Affected policies: 1 &quot;lan-to-dmz-web&quot;.</div>
+<div class="next"><b>Next step:</b> Review the affected policies.</div>
+</div>
+<div class="card finding medium"><h3><span class="badge sev-medium">MEDIUM</span>Logging disabled on policy 2 &quot;lan-to-mail&quot;</h3>
+<div class="meta">VDOM root | change</div><div>Without traffic logs you cannot trace or prove what this policy allowed. Changes: logtraffic: all -&gt; disable.</div>
+<div class="next"><b>Next step:</b> Keep at least logtraffic utm or all unless there is a documented reason.</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Encrypted value in system admin [admin] not comparable</h3>
+<div class="meta">VDOM root | change</div><div>The encrypted (ENC) value of password differs. FortiOS can encrypt the same secret differently in each backup, so fgaudit cannot tell whether it changed. This is not a confirmation that nothing changed.</div>
+<div class="next"><b>Next step:</b> If the secret should be unchanged, confirm it another way (for example, the tunnel or login still works).</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Encrypted value in system admin [netops] not comparable</h3>
+<div class="meta">VDOM root | change</div><div>The encrypted (ENC) value of password differs. FortiOS can encrypt the same secret differently in each backup, so fgaudit cannot tell whether it changed. This is not a confirmation that nothing changed.</div>
+<div class="next"><b>Next step:</b> If the secret should be unchanged, confirm it another way (for example, the tunnel or login still works).</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Encrypted value in user local [alice] not comparable</h3>
+<div class="meta">VDOM root | change</div><div>The encrypted (ENC) value of passwd differs. FortiOS can encrypt the same secret differently in each backup, so fgaudit cannot tell whether it changed. This is not a confirmation that nothing changed.</div>
+<div class="next"><b>Next step:</b> If the secret should be unchanged, confirm it another way (for example, the tunnel or login still works).</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Encrypted value in vpn ipsec phase1-interface [to-hub] not comparable</h3>
+<div class="meta">VDOM root | change</div><div>The encrypted (ENC) value of psksecret differs. FortiOS can encrypt the same secret differently in each backup, so fgaudit cannot tell whether it changed. This is not a confirmation that nothing changed.</div>
+<div class="next"><b>Next step:</b> If the secret should be unchanged, confirm it another way (for example, the tunnel or login still works).</div>
+</div>
+<div class="card finding info"><h3><span class="badge sev-info">INFO</span>Encrypted value in vpn certificate local [demo-cert] not comparable</h3>
+<div class="meta">VDOM root | change</div><div>The encrypted (ENC) value of password differs. FortiOS can encrypt the same secret differently in each backup, so fgaudit cannot tell whether it changed. This is not a confirmation that nothing changed.</div>
+<div class="next"><b>Next step:</b> If the secret should be unchanged, confirm it another way (for example, the tunnel or login still works).</div>
+</div>
+<h2>Incident timeline (FortiOS 8.0)</h2>
+<div class="muted small">Input: branch-01.log  |  471 lines</div>
+<div class="muted small">Input: hub-01-syslog.log  |  3 lines</div>
+<div class="muted small">Input: lab-01.log  |  1 lines</div>
+<div class="card"><h3>Notes</h3><ul class="notes">
+<li>No time zone (tz) and no eventtime in the logs of: fw-lab-01. Their times are shown as device-local (marked &quot;?&quot;) and not converted. Across devices the order may be wrong.</li>
+<li>1 log entries had no usable time and were left out of the timeline (counted, not hidden).</li>
+<li>Times come from eventtime (epoch) and are shown in the device time zone (tz) or UTC.</li>
+</ul></div>
+<h2>Findings (3)</h2>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Incident 1: likely trigger is &quot;Interface port1 down&quot; (fw-branch-01, 2026-10-14 10:02:03 +0100)</h3>
+<div class="meta">timeline</div><div>Hypothesis, not proof. Confidence: high. Reasoning: it is the earliest anomalous event in this time frame, with 5 follow-up event(s); later events name the same interface or follow a reboot. 180 s earlier: &quot;Config changed by netops: system.interface [port1]&quot;. Check whether this change was the actual trigger.</div>
+<div class="next"><b>Next step:</b> Check the trigger first (interface status, circuit, remote peer) and compare the times with other sources such as FortiAnalyzer or provider tickets.</div>
+</div>
+<div class="card finding high"><h3><span class="badge sev-high">HIGH</span>Incident 3: likely trigger is &quot;Entered conserve mode (memory)&quot; (fw-branch-01, 2026-10-14 14:27:03 +0100)</h3>
+<div class="meta">timeline</div><div>Hypothesis, not proof. Confidence: low. Reasoning: it is the earliest anomalous event in this time frame, with 0 follow-up event(s); only one anomalous event, so there is no chain to compare.</div>
+<div class="next"><b>Next step:</b> Check the trigger first (interface status, circuit, remote peer) and compare the times with other sources such as FortiAnalyzer or provider tickets.</div>
+</div>
+<div class="card finding low"><h3><span class="badge sev-low">LOW</span>Incident 2: likely trigger is &quot;Admin login failed: test&quot; (fw-lab-01, 2026-10-14 11:02:03 (?))</h3>
+<div class="meta">timeline</div><div>Hypothesis, not proof. Confidence: low. Reasoning: it is the earliest anomalous event in this time frame, with 0 follow-up event(s); only one anomalous event, so there is no chain to compare; the logs have no time zone (tz), so times are device-local and may not line up across devices.</div>
+<div class="next"><b>Next step:</b> Check the trigger first (interface status, circuit, remote peer) and compare the times with other sources such as FortiAnalyzer or provider tickets.</div>
+</div>
+<h2>Timeline</h2>
+<div class="card tbl"><table><thead><tr>
+<th>Time</th>
+<th>Device</th>
+<th>Event</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr class="tl-info"><td class="mono">2026-10-14 09:57:03 +0100</td><td>fw-branch-01</td><td><span class="badge sev-info">Admin</span>Admin login: netops</td><td>1</td></tr>
+<tr class="tl-info"><td class="mono">2026-10-14 09:59:03 +0100</td><td>fw-branch-01</td><td><span class="badge sev-info">Config</span>Config changed by netops: system.interface [port1]</td><td>1</td></tr>
+<tr class="tl-high"><td class="mono">2026-10-14 10:02:03 +0100</td><td>fw-branch-01</td><td><span class="badge sev-high">Interface</span>Interface port1 down</td><td>1</td></tr>
+<tr class="tl-medium"><td class="mono">2026-10-14 10:02:05 +0100</td><td>fw-branch-01</td><td><span class="badge sev-medium">SD-WAN</span>SD-WAN member internet/port1 down</td><td>401x until 2026-10-14 10:08:45 +0100</td></tr>
+<tr class="tl-medium"><td class="mono">2026-10-14 10:02:10 +0100</td><td>fw-branch-01</td><td><span class="badge sev-medium">IPsec</span>IPsec tunnel to-hub down</td><td>1</td></tr>
+<tr class="tl-medium"><td class="mono">2026-10-14 10:02:12 +0100</td><td>fw-hub-01</td><td><span class="badge sev-medium">IPsec</span>IPsec tunnel branch-01 down</td><td>1</td></tr>
+<tr class="tl-high"><td class="mono">2026-10-14 10:02:43 +0100</td><td>fw-branch-01</td><td><span class="badge sev-high">BGP</span>BGP neighbor 169.254.10.1 down</td><td>1</td></tr>
+<tr class="tl-high"><td class="mono">2026-10-14 10:02:44 +0100</td><td>fw-hub-01</td><td><span class="badge sev-high">BGP</span>BGP neighbor 169.254.10.2 down</td><td>1</td></tr>
+<tr class="tl-info"><td class="mono">2026-10-14 10:20:03 +0100</td><td>fw-branch-01</td><td><span class="badge sev-info">Interface</span>Interface port1 up</td><td>1</td></tr>
+<tr class="tl-info"><td class="mono">2026-10-14 10:20:13 +0100</td><td>fw-branch-01</td><td><span class="badge sev-info">IPsec</span>IPsec tunnel to-hub up</td><td>1</td></tr>
+<tr class="tl-info"><td class="mono">2026-10-14 10:20:18 +0100</td><td>fw-hub-01</td><td><span class="badge sev-info">IPsec</span>IPsec tunnel branch-01 up</td><td>1</td></tr>
+<tr class="tl-info"><td class="mono">2026-10-14 10:20:43 +0100</td><td>fw-branch-01</td><td><span class="badge sev-info">BGP</span>BGP neighbor 169.254.10.1 up</td><td>1</td></tr>
+<tr class="tl-low"><td class="mono">2026-10-14 11:02:03 (?)</td><td>fw-lab-01</td><td><span class="badge sev-low">Admin</span>Admin login failed: test</td><td>1</td></tr>
+<tr class="tl-high"><td class="mono">2026-10-14 14:27:03 +0100</td><td>fw-branch-01</td><td><span class="badge sev-high">Conserve mode</span>Entered conserve mode (memory)</td><td>1</td></tr>
+<tr class="tl-info"><td class="mono">2026-10-14 14:31:03 +0100</td><td>fw-branch-01</td><td><span class="badge sev-info">Conserve mode</span>Left conserve mode (memory)</td><td>1</td></tr>
+</tbody></table>
+<p class="muted small">475 lines, 415 timeline events, 7 unrecognised, 50 traffic/UTM logs skipped, 2 unreadable lines</p></div>
+<div class="card tbl"><h3>Unrecognised log entries (counted, not dropped)</h3><table><thead><tr><th>Count</th><th>logid</th><th>subtype</th><th>description</th></tr></thead><tbody>
+<tr><td>7</td><td class="mono">0100099999</td><td>system</td><td>Demo unknown event</td></tr>
+</tbody></table></div>
+<footer>Generated by fgaudit 1.0.0. Unofficial, not affiliated with or endorsed by Fortinet.</footer></div></body></html>

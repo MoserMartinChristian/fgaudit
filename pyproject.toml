@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fgaudit"
+version = "1.0.0"
+description = "Offline, read-only audit of FortiOS config backups and logs: shadowed policies, change risk, IP overlaps, incident timeline. Unofficial, not affiliated with or endorsed by Fortinet."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "mosermartinchristian" }]
+keywords = ["fortigate", "fortios", "firewall", "audit", "network", "security", "policy", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Networking :: Firewalls",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/mosermartinchristian/fgaudit"
+Issues = "https://github.com/mosermartinchristian/fgaudit/issues"
+
+[project.scripts]
+fgaudit = "fgaudit.cli:main"
+
+[project.gui-scripts]
+fgaudit-gui = "fgaudit.gui:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
